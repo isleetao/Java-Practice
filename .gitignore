@@ -1,0 +1,11 @@
+# Ignore some file and dir
+
+# gradle
+.gradle/
+build/
+
+# Idea 
+.idea/
+
+# expect for .gitkeep
+!.gitkeep
