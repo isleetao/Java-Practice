@@ -4,23 +4,23 @@
  * This is a general purpose Gradle build.
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
-group 'xntjb.xyz'
-version '0.1-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'idea'
-apply plugin: 'com.bmuschko.tomcat'
-
 buildscript {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE'
     }
 }
+
+group 'example.com'
+version '0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -28,29 +28,22 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    // The production code uses the SLF4J logging API at compile time
-    compile 'org.slf4j:slf4j-api:1.7.21'
-
-    // 依赖 servlet
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-
-    def tomcatVersion = '8.5.35'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("junit: junit")
 }
 
-tomcatRunWar.contextPath = '/'
-tomcatRunWar.httpPort = 8090
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-task createJavaProject << {
-    sourceSets*.java.srcDirs*.each{ it.mkdirs() }
-    sourceSets*.resources.srcDirs*.each{ it.mkdirs() }
-}
-
-task createWebProject(dependsOn: 'createJavaProject') {
-    def webAppdir = file("$webAppDirName")
-    webAppdir.mkdirs()
-}
+/**
+ * init dir
+ */
+//task createJavaProject << {
+//    sourceSets*.java.srcDirs*.each{ it.mkdirs() }
+//    sourceSets*.resources.srcDirs*.each{ it.mkdirs() }
+//}
+//
+//task createWebProject(dependsOn: 'createJavaProject') {
+//    def webAppdir = file("$webAppDirName")
+//    webAppdir.mkdirs()
+//}

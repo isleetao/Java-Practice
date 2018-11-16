@@ -7,5 +7,7 @@ build/
 # Idea 
 .idea/
 
+out
+
 # expect for .gitkeep
 !.gitkeep
